@@ -1,59 +1,83 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/outputs.h>
+
+#define DEFAULT 0
+#define NMBR 1
+#define FUNC 2
+#define SPEC 3
+#define HARD 4
 
 / {
   chosen {
     zmk,matrix_transform = &default_transform;
-    //zmk,matrix_transform = &five_column_transform;
   };
 };
+
+// timing config
+  &mt {
+    flavor = "hold-preferred";
+    tapping-term-ms = <150>;
+    quick-tap-ms = <150>;
+  };
+  &lt {
+    flavor = "hold-preferred";
+    tapping-term-ms = <150>;
+    quick-tap-ms = <150>;
+  };
 
 / {
         keymap {
                 compatible = "zmk,keymap";
 
                 default_layer {
-                        label = "QWERTY";
-// -----------------------------------------------------------------------------------------
-// |  TAB |  Q  |  W  |  E  |  R  |  T  |   |  Y  |  U   |  I  |  O  |  P  | BKSP |
-// | CTRL |  A  |  S  |  D  |  F  |  G  |   |  H  |  J   |  K  |  L  |  ;  |  '   |
-// | SHFT |  Z  |  X  |  C  |  V  |  B  |   |  N  |  M   |  ,  |  .  |  /  | ESC  |
-//                    | GUI | LWR | SPC |   | ENT | RSE  | ALT |
+                        label = "BILLIAM";
                         bindings = <
-   &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-   &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-   &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                  &kp LGUI &mo 1 &kp SPACE   &kp RET &mo 2 &kp RALT
-                        >;
-                };
-                lower_layer {
-                        label = "NUMBER";
-// -----------------------------------------------------------------------------------------
-// |  TAB |  1  |  2  |  3  |  4  |  5  |   |  6  |  7  |  8  |  9  |  0  | BKSP |
-// | BTCLR| BT1 | BT2 | BT3 | BT4 | BT5 |   | LFT | DWN |  UP | RGT |     |      |
-// | SHFT |     |     |     |     |     |   |     |     |     |     |     |      |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
-                        bindings = <
-   &kp TAB    &kp N1       &kp N2       &kp N3       &kp N4       &kp N5         &kp N6   &kp N7   &kp N8 &kp N9    &kp N0 &kp BSPC
-   &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4   &kp LEFT &kp DOWN &kp UP &kp RIGHT &trans &trans
-   &kp LSHFT  &trans       &trans       &trans       &trans       &trans         &trans   &trans   &trans &trans    &trans &trans
-                          	        &kp LGUI     &trans       &kp SPACE      &kp RET  &trans   &kp RALT
+   &lt 4 TAB     &kp SQT  &kp COMMA &kp DOT &kp P &kp Y   &kp F &kp G &kp C &kp R &kp L &lt 3 GRAVE
+   &mt LSHFT ESC &kp A    &kp O     &kp E   &kp U &kp I   &kp D &kp H &kp T &kp N &kp S &mt RSHFT RET
+   &lt 1 LEFT    &kp SEMI &kp Q     &kp J   &kp K &kp X   &kp B &kp M &kp W &kp V &kp Z &lt 2 RIGHT
+                       &kp LCTRL &kp SPACE &mt LGUI DEL   &mt RGUI BSPC &kp SPACE &kp RALT
                         >;
                 };
 
-                raise_layer {
-                        label = "SYMBOL";
-// -----------------------------------------------------------------------------------------
-// |  TAB |  !  |  @  |  #  |  $  |  %  |   |  ^  |  &  |  *  |  (  |  )  | BKSP |
-// | CTRL |     |     |     |     |     |   |  -  |  =  |  [  |  ]  |  \  |  `   |
-// | SHFT |     |     |     |     |     |   |  _  |  +  |  {  |  }  | "|" |  ~   |
-//                    | GUI |     | SPC |   | ENT |     | ALT |
+                nmbr_layer {
+                        label = "NUMBER";
                         bindings = <
-   &kp  TAB  &kp EXCL &kp AT &kp HASH &kp DLLR &kp PRCNT   &kp CARET &kp AMPS  &kp STAR &kp LPAR &kp RPAR &kp BSPC
-   &kp LCTRL &trans   &trans &trans   &trans   &trans      &kp MINUS &kp EQUAL &kp LBKT &kp RBKT &kp BSLH &kp GRAVE
-   &kp LSHFT &trans   &trans &trans   &trans   &trans      &kp UNDER &kp PLUS  &kp LBRC &kp RBRC &kp PIPE &kp TILDE
-                    	     &kp LGUI &trans   &kp SPACE   &kp RET   &trans    &kp RALT
+   &kp LG(LS(N5)) &kp LG(EQUAL) &kp LGUI &kp UP    &kp RET       &kp BSPC    &kp AMPS  &kp N7 &kp N8 &kp N9 &kp PLUS &kp MINUS
+   &kp LG(LA(N8)) &kp LG(N0)    &kp LEFT &kp DOWN  &kp RIGHT     &kp LSHFT   &kp PIPE  &kp N4 &kp N5 &kp N6 &kp STAR &kp FSLH
+   &none          &kp LG(MINUS) &none    &kp LG(W) &kp LG(LC(F)) &none       &kp CARET &kp N1 &kp N2 &kp N3 &kp DOT  &kp EQUAL
+                &mt LCTRL LG(LS(LBKT)) &kp LG(LS(LBRC)) &mt LGUI LG(LS(RBKT))       &mt RGUI BSPC  &kp SPACE   &kp N0
+                        >;
+                };
+
+                func_layer {
+                        label = "FUNCTION";
+                        bindings = <
+   &none     &kp EXCL  &kp LPAR &kp RPAR &kp TILDE &kp HASH   &kp F1 &kp F2  &kp F3  &kp F4  &kp C_NEXT &kp C_VOL_UP
+   &kp BSLH  &kp PRCNT &kp LBKT &kp RBKT &kp GRAVE &kp AT     &kp F5 &kp F6  &kp F7  &kp F8  &kp C_PP   &kp C_VOL_DN
+   &none     &kp QMARK &kp LBRC &kp RBRC &kp UNDER &kp DLLR   &kp F9 &kp F10 &kp F11 &kp F12 &kp C_PREV &none
+                  &kp LCTRL &kp SPACE   &mt LGUI DEL               &mt RGUI LC(LEFT)   &kp SPACE    &mt RALT LC(RIGHT)
+                        >;
+                };
+
+                spec_layer {
+                        label = "SPECIAL";
+                        bindings = <
+   &none &kp LA(N1)       &kp LA(COMMA) &kp LA(DOT) &kp LA(P) &kp LA(Y)       &kp LA(F) &none &kp LA(G)  &kp LA(R) &kp LA(LS(EQUAL)) &none
+   &none &none            &kp LA(Z)     &kp LA(X)   &kp LA(M) &kp LA(N5)      &kp LA(K) &none &kp LA(N2) &kp LA(L) &kp LA(W)         &kp LA(V)
+   &none &kp LA(LS(FSLH)) &none         &none       &none     &kp LA(LS(N2))  &none     &none &none      &none     &none             &kp LA(EQUAL)
+                 &kp LCTRL &kp SPACE   &mt LGUI DEL                 &mt RGUI LG(LS(LBRC))   &kp SPACE    &mt RALT LG(LS(RBRC))
+                        >;
+                };
+
+                hard_layer {
+                        label = "HARDWARE";
+                        bindings = <
+   &none &none &none      &out OUT_USB &bt BT_SEL 2 &bt BT_SEL 0   &none &none &none &none &none &none
+   &none &none &bt BT_CLR &out OUT_TOG &bt BT_SEL 3 &bt BT_SEL 1   &none &none &none &none &none &none
+   &none &none &none      &out OUT_BLE &bt BT_SEL 4 &none          &none &none &none &none &none &none
+                                       &none &none &kp LC(LG(Q))   &none &none &none
                         >;
                 };
         };
